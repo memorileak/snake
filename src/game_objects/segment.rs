@@ -44,7 +44,7 @@ impl Segment {
   pub fn seg_above(&self) -> Segment {
     Segment {
       x: self.x,
-      y: (self.y + Config::WIN_H - self.height) % Config::WIN_H,
+      y: (self.y + Config::WIN_H - Config::STEP) % Config::WIN_H,
       width: self.width,
       height: self.height,
     }
@@ -53,7 +53,7 @@ impl Segment {
   pub fn seg_below(&self) -> Segment {
     Segment {
       x: self.x,
-      y: (self.y + self.height) % Config::WIN_H,
+      y: (self.y + Config::STEP) % Config::WIN_H,
       width: self.width,
       height: self.height,
     }
@@ -61,7 +61,7 @@ impl Segment {
 
   pub fn seg_left(&self) -> Segment {
     Segment {
-      x: (self.x + Config::WIN_W - self.width) % Config::WIN_W,
+      x: (self.x + Config::WIN_W - Config::STEP) % Config::WIN_W,
       y: self.y,
       width: self.width,
       height: self.height,
@@ -70,7 +70,7 @@ impl Segment {
 
   pub fn seg_right(&self) -> Segment {
     Segment {
-      x: (self.x + self.width) % Config::WIN_W,
+      x: (self.x + Config::STEP) % Config::WIN_W,
       y: self.y,
       width: self.width,
       height: self.height,

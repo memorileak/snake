@@ -43,6 +43,11 @@ impl Snake {
     Snake {
       direction: Direction::Up,
       body: LinkedList::from([
+        segment.seg_right().seg_right().seg_right().seg_right().seg_right().seg_right().seg_right().seg_right().seg_right(),
+        segment.seg_right().seg_right().seg_right().seg_right().seg_right().seg_right().seg_right().seg_right(),
+        segment.seg_right().seg_right().seg_right().seg_right().seg_right().seg_right().seg_right(),
+        segment.seg_right().seg_right().seg_right().seg_right().seg_right().seg_right(),
+        segment.seg_right().seg_right().seg_right().seg_right().seg_right(),
         segment.seg_right().seg_right().seg_right().seg_right(),
         segment.seg_right().seg_right().seg_right(),
         segment.seg_right().seg_right(),
@@ -64,31 +69,31 @@ impl Snake {
     self.body.pop_back();
   }
 
-  // pub fn goUp(&mut self) {
-  //   match self.direction {
-  //     Direction::Down => {},
-  //     _ => {self.direction = Direction::Up},
-  //   }
-  // }
+  pub fn turn_up(&mut self) {
+    match self.direction {
+      Direction::Down => {},
+      _ => {self.direction = Direction::Up},
+    }
+  }
 
-  // pub fn goDown(&mut self) {
-  //   match self.direction {
-  //     Direction::Up => {},
-  //     _ => {self.direction = Direction::Down},
-  //   }
-  // }
+  pub fn turn_down(&mut self) {
+    match self.direction {
+      Direction::Up => {},
+      _ => {self.direction = Direction::Down},
+    }
+  }
 
-  // pub fn goLeft(&mut self) {
-  //   match self.direction {
-  //     Direction::Right => {},
-  //     _ => {self.direction = Direction::Left},
-  //   }
-  // }
+  pub fn turn_left(&mut self) {
+    match self.direction {
+      Direction::Right => {},
+      _ => {self.direction = Direction::Left},
+    }
+  }
 
-  // pub fn goRight(&mut self) {
-  //   match self.direction {
-  //     Direction::Left => {},
-  //     _ => {self.direction = Direction::Right},
-  //   }
-  // }
+  pub fn turn_right(&mut self) {
+    match self.direction {
+      Direction::Left => {},
+      _ => {self.direction = Direction::Right},
+    }
+  }
 }

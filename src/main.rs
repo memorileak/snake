@@ -21,12 +21,14 @@ use piston::event_loop::{
 use piston::input::{
   RenderEvent,
   UpdateEvent,
+  ButtonEvent,
 };
 use piston::window::WindowSettings;
 use game_objects::{
   Config,
   Snake,
   Renderable,
+  KeyCode,
 };
 
 fn main() {
@@ -46,12 +48,20 @@ fn main() {
 
   while let Some(e) = events.next(&mut window) {
     if let Some(args) = e.render_args() {
-      const BLACK: [f32; 4] = [0.0, 0.0, 0.0, 1.0];
-      clear(BLACK, &mut gl);
+      clear(Config::BG_COLOR, &mut gl);
       snake.render(&mut gl, &args);
     }
     if let Some(_) = e.update_args() {
       snake.shift();
+    }
+    if let Some(args) = e.button_args() {
+      match KeyCode::from(args.scancode.unwrap()) {
+        KeyCode::W => {snake.turn_up()},
+        KeyCode::S => {snake.turn_down()},
+        KeyCode::A => {snake.turn_left()},
+        KeyCode::D => {snake.turn_right()},
+        KeyCode::Unknown => {},
+      }
     }
   }
 }
