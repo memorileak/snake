@@ -3,15 +3,16 @@ extern crate graphics;
 extern crate opengl_graphics;
 extern crate piston;
 
-mod game_objects;
+mod game;
 
+use std::path::Path;
 use glutin_window::GlutinWindow;
-use graphics::{
-  clear,
-};
+use graphics::clear;
 use opengl_graphics::{
   GlGraphics,
   OpenGL,
+  Texture,
+  TextureSettings,
 };
 use piston::event_loop::{
   EventSettings,
@@ -24,7 +25,7 @@ use piston::input::{
   ButtonEvent,
 };
 use piston::window::WindowSettings;
-use game_objects::{
+use game::{
   Config,
   Snake,
   Renderable,
@@ -41,6 +42,7 @@ fn main() {
     .unwrap();
 
   let mut gl = GlGraphics::new(opengl);
+  let texture = Texture::from_path(Path::new("sprites/snake.png"), &TextureSettings::new()).unwrap();
   let mut snake = Snake::new();
 
   let mut events = Events::new(EventSettings::new());
@@ -49,13 +51,13 @@ fn main() {
   while let Some(e) = events.next(&mut window) {
     if let Some(args) = e.render_args() {
       clear(Config::BG_COLOR, &mut gl);
-      snake.render(&mut gl, &args);
+      snake.render(&mut gl, &args, &texture);
     }
     if let Some(_) = e.update_args() {
       snake.shift();
     }
     if let Some(args) = e.button_args() {
-      match KeyCode::from(args.scancode.unwrap()) {
+      match KeyCode::from(args.scancode.unwrap_or(0)) {
         KeyCode::W => {snake.turn_up()},
         KeyCode::S => {snake.turn_down()},
         KeyCode::A => {snake.turn_left()},
