@@ -92,16 +92,16 @@ impl Snake {
       },
     };
 
-    let tail = self.body.pop_back().unwrap();
+    let old_tail = self.body.pop_back().unwrap();
     let new_tail = self.body.back_mut().unwrap();
 
     new_tail.be_tail();
 
-    if tail.neighbor.has_above() {
+    if old_tail.neighbor.has_above() {
       new_tail.neighbor.nomore_below();
-    } else if tail.neighbor.has_below() {
+    } else if old_tail.neighbor.has_below() {
       new_tail.neighbor.nomore_above();
-    } else if tail.neighbor.has_left() {
+    } else if old_tail.neighbor.has_left() {
       new_tail.neighbor.nomore_right();
     } else {
       new_tail.neighbor.nomore_left();
