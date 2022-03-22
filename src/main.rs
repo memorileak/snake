@@ -42,20 +42,13 @@ fn main() {
     .unwrap();
 
   let mut gl = GlGraphics::new(opengl);
-  let texture = Texture::from_path(Path::new("sprites/snake.png"), &TextureSettings::new()).unwrap();
+  let texture = Texture::from_path(Path::new("sprites/pink-snake.png"), &TextureSettings::new()).unwrap();
   let mut snake = Snake::new();
 
   let mut events = Events::new(EventSettings::new());
   events.set_ups(Config::UPS);
 
   while let Some(e) = events.next(&mut window) {
-    if let Some(args) = e.render_args() {
-      clear(Config::BG_COLOR, &mut gl);
-      snake.render(&mut gl, &args, &texture);
-    }
-    if let Some(_) = e.update_args() {
-      snake.shift();
-    }
     if let Some(args) = e.button_args() {
       match KeyCode::from(args.scancode.unwrap_or(0)) {
         KeyCode::W => {snake.turn_up()},
@@ -64,6 +57,13 @@ fn main() {
         KeyCode::D => {snake.turn_right()},
         KeyCode::Unknown => {},
       }
+    }
+    if let Some(_) = e.update_args() {
+      snake.shift();
+    }
+    if let Some(args) = e.render_args() {
+      clear(Config::BG_COLOR, &mut gl);
+      snake.render(&mut gl, &args, &texture);
     }
   }
 }
