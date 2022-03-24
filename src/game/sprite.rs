@@ -24,26 +24,28 @@ pub enum Sprite {
 
 impl Sprite {
   pub fn slot(&self) -> [f64; 4] {
+    let seg_w = Config::SEG_W as f64;
+    let seg_h = Config::SEG_H as f64;
     match self {
-      Self::SnakeHeadUp => [3.0 * Config::SEG_W as f64, 0.0 * Config::SEG_H as f64, Config::SEG_W as f64, Config::SEG_H as f64],
-      Self::SnakeHeadDown => [4.0 * Config::SEG_W as f64, 1.0 * Config::SEG_H as f64, Config::SEG_W as f64, Config::SEG_H as f64],
-      Self::SnakeHeadLeft => [3.0 * Config::SEG_W as f64, 1.0 * Config::SEG_H as f64, Config::SEG_W as f64, Config::SEG_H as f64],
-      Self::SnakeHeadRight => [4.0 * Config::SEG_W as f64, 0.0 * Config::SEG_H as f64, Config::SEG_W as f64, Config::SEG_H as f64],
+      Self::SnakeHeadUp => [3.0 * seg_w, 0.0 * seg_h, seg_w, seg_h],
+      Self::SnakeHeadDown => [4.0 * seg_w, 1.0 * seg_h, seg_w, seg_h],
+      Self::SnakeHeadLeft => [3.0 * seg_w, 1.0 * seg_h, seg_w, seg_h],
+      Self::SnakeHeadRight => [4.0 * seg_w, 0.0 * seg_h, seg_w, seg_h],
 
-      Self::SnakeTailUp => [3.0 * Config::SEG_W as f64, 2.0 * Config::SEG_H as f64, Config::SEG_W as f64, Config::SEG_H as f64],
-      Self::SnakeTailDown => [4.0 * Config::SEG_W as f64, 3.0 * Config::SEG_H as f64, Config::SEG_W as f64, Config::SEG_H as f64],
-      Self::SnakeTailLeft => [3.0 * Config::SEG_W as f64, 3.0 * Config::SEG_H as f64, Config::SEG_W as f64, Config::SEG_H as f64],
-      Self::SnakeTailRight => [4.0 * Config::SEG_W as f64, 2.0 * Config::SEG_H as f64, Config::SEG_W as f64, Config::SEG_H as f64],
+      Self::SnakeTailUp => [3.0 * seg_w, 2.0 * seg_h, seg_w, seg_h],
+      Self::SnakeTailDown => [4.0 * seg_w, 3.0 * seg_h, seg_w, seg_h],
+      Self::SnakeTailLeft => [3.0 * seg_w, 3.0 * seg_h, seg_w, seg_h],
+      Self::SnakeTailRight => [4.0 * seg_w, 2.0 * seg_h, seg_w, seg_h],
 
-      Self::SnakeBendTopLeft => [0.0 * Config::SEG_W as f64, 0.0 * Config::SEG_H as f64, Config::SEG_W as f64, Config::SEG_H as f64],
-      Self::SnakeBendTopRight => [2.0 * Config::SEG_W as f64, 0.0 * Config::SEG_H as f64, Config::SEG_W as f64, Config::SEG_H as f64],
-      Self::SnakeBendBottomLeft => [0.0 * Config::SEG_W as f64, 1.0 * Config::SEG_H as f64, Config::SEG_W as f64, Config::SEG_H as f64],
-      Self::SnakeBendBottomRight => [2.0 * Config::SEG_W as f64, 2.0 * Config::SEG_H as f64, Config::SEG_W as f64, Config::SEG_H as f64],
+      Self::SnakeBendTopLeft => [0.0 * seg_w, 0.0 * seg_h, seg_w, seg_h],
+      Self::SnakeBendTopRight => [2.0 * seg_w, 0.0 * seg_h, seg_w, seg_h],
+      Self::SnakeBendBottomLeft => [0.0 * seg_w, 1.0 * seg_h, seg_w, seg_h],
+      Self::SnakeBendBottomRight => [2.0 * seg_w, 2.0 * seg_h, seg_w, seg_h],
 
-      Self::SnakeVertical => [2.0 * Config::SEG_W as f64, 1.0 * Config::SEG_H as f64, Config::SEG_W as f64, Config::SEG_H as f64],
-      Self::SnakeHorizontal => [1.0 * Config::SEG_W as f64, 0.0 * Config::SEG_H as f64, Config::SEG_W as f64, Config::SEG_H as f64],
+      Self::SnakeVertical => [2.0 * seg_w, 1.0 * seg_h, seg_w, seg_h],
+      Self::SnakeHorizontal => [1.0 * seg_w, 0.0 * seg_h, seg_w, seg_h],
 
-      Self::Prey => [0.0 * Config::SEG_W as f64, 3.0 * Config::SEG_H as f64, Config::SEG_W as f64, Config::SEG_H as f64],
+      Self::Prey => [0.0 * seg_w, 3.0 * seg_h, seg_w, seg_h],
     }
   }
 }

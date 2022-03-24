@@ -42,14 +42,14 @@ impl Renderable for Snake {
 
 impl Snake {
   pub fn new() -> Snake {
-    let mut segment6 = Segment::new(0, 0);   segment6.be_tail(); segment6.neighbor.aware_right();
+    let mut segment6 = Segment::new(0, 220); segment6.be_tail(); segment6.neighbor.aware_right();
     let mut segment5 = segment6.seg_right(); segment5.neighbor.aware_left().aware_right();
     let mut segment4 = segment5.seg_right(); segment4.neighbor.aware_left().aware_right();
     let mut segment3 = segment4.seg_right(); segment3.neighbor.aware_left().aware_right();
     let mut segment2 = segment3.seg_right(); segment2.neighbor.aware_left().aware_right();
     let mut segment1 = segment2.seg_right(); segment1.be_head(); segment1.neighbor.aware_left();
     Snake {
-      direction: Direction::Up,
+      direction: Direction::Right,
       body: LinkedList::from([segment1, segment2, segment3, segment4, segment5, segment6]),
     }
   }
