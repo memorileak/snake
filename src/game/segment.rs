@@ -3,6 +3,8 @@ use super::{
   Neighbor,
   Sprite,
   SpriteCalculator,
+  Position,
+  Size,
 };
 
 pub struct Segment {
@@ -13,16 +15,6 @@ pub struct Segment {
   head: bool,
   tail: bool,
   pub neighbor: Neighbor,
-}
-
-pub struct Position {
-  pub x: u32,
-  pub y: u32,
-}
-
-pub struct Size {
-  pub width: u32,
-  pub height: u32,
 }
 
 impl Segment {

@@ -23,12 +23,13 @@ use piston::input::{
   RenderEvent,
   UpdateEvent,
   ButtonEvent,
+  ButtonState,
 };
 use piston::window::WindowSettings;
 use game::{
-  Config,
-  Snake,
   Renderable,
+  Config,
+  Game,
   KeyCode,
 };
 
@@ -42,28 +43,24 @@ fn main() {
     .unwrap();
 
   let mut gl = GlGraphics::new(opengl);
-  let texture = Texture::from_path(Path::new("sprites/pink-snake.png"), &TextureSettings::new()).unwrap();
-  let mut snake = Snake::new();
+  let texture = Texture::from_path(Path::new("sprites/snake.png"), &TextureSettings::new()).unwrap();
+  let mut game = Game::new();
 
   let mut events = Events::new(EventSettings::new());
   events.set_ups(Config::UPS);
 
   while let Some(e) = events.next(&mut window) {
     if let Some(args) = e.button_args() {
-      match KeyCode::from(args.scancode.unwrap_or(0)) {
-        KeyCode::W => {snake.turn_up()},
-        KeyCode::S => {snake.turn_down()},
-        KeyCode::A => {snake.turn_left()},
-        KeyCode::D => {snake.turn_right()},
-        KeyCode::Unknown => {},
+      if let ButtonState::Press = args.state {
+        game.receive_keystroke(KeyCode::from(args.scancode.unwrap_or(0)));
       }
     }
     if let Some(_) = e.update_args() {
-      snake.shift();
+      game.tick();
     }
     if let Some(args) = e.render_args() {
       clear(Config::BG_COLOR, &mut gl);
-      snake.render(&mut gl, &args, &texture);
+      game.render(&mut gl, &args, &texture);
     }
   }
 }
