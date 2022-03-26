@@ -33,12 +33,11 @@ impl Renderable for Game {
 
 impl Game {
   pub fn new() -> Game {
-    Game {
-      snake: Snake::new(),
-      prey: Prey::new(),
-      score: Score::new(),
-      directions: VecDeque::new(),
-    }
+    let snake = Snake::new();
+    let prey = Prey::new_avoid(snake.get_positions().as_slice());
+    let score = Score::new();
+    let directions = VecDeque::new();
+    Game {snake, prey, score, directions}
   }
 
   pub fn tick(&mut self) {
@@ -55,7 +54,7 @@ impl Game {
       EvaluateResult::SnakeDied => {},
       EvaluateResult::SnakeAte => {
         self.snake.grow();
-        self.prey.move_randomly();
+        self.prey.move_randomly_avoid(self.snake.get_positions().as_slice());
       },
       EvaluateResult::Normal => {},
     }

@@ -35,6 +35,7 @@ use game::{
 
 fn main() {
   let opengl = OpenGL::V4_5;
+
   let mut window: GlutinWindow = WindowSettings::new("Snake", [Config::WIN_W, Config::WIN_H])
     .graphics_api(opengl)
     .resizable(false)
@@ -43,7 +44,10 @@ fn main() {
     .unwrap();
 
   let mut gl = GlGraphics::new(opengl);
-  let texture = Texture::from_path(Path::new("sprites/snake.png"), &TextureSettings::new()).unwrap();
+  let texture = Texture::from_path(
+    Path::new("sprites/pink-snake.png"), 
+    &TextureSettings::new()
+  ).unwrap();
   let mut game = Game::new();
 
   let mut events = Events::new(EventSettings::new());

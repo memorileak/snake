@@ -39,8 +39,8 @@ impl Renderable for Prey {
 }
 
 impl Prey {
-  pub fn new() -> Prey {
-    let position = Random::random_position();
+  pub fn new_avoid(positions: &[Position]) -> Prey {
+    let position = Random::random_position_avoid(positions);
     Prey {
       x: position.x,
       y: position.y,
@@ -60,8 +60,8 @@ impl Prey {
     }
   }
 
-  pub fn move_randomly(&mut self) {
-    let position = Random::random_position();
+  pub fn move_randomly_avoid(&mut self, positions: &[Position]) {
+    let position = Random::random_position_avoid(positions);
     self.x = position.x;
     self.y = position.y;
   }

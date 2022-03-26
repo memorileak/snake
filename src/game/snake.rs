@@ -2,6 +2,7 @@ extern crate graphics;
 extern crate piston;
 extern crate opengl_graphics;
 
+use std::vec::Vec;
 use std::collections::{
   LinkedList,
   VecDeque,
@@ -21,6 +22,7 @@ use super::{
   Direction,
   Position,
   Segment,
+  Config,
 };
 
 pub struct Snake {
@@ -54,7 +56,7 @@ impl Renderable for Snake {
         );
       }
     });
-}
+  }
 }
 
 impl Snake {
@@ -134,6 +136,15 @@ impl Snake {
     self.body.front().unwrap().position()
   }
 
+  pub fn get_positions(&self) -> Vec<Position> {
+    let mut positions: Vec<Position> = Vec::new();
+    let mut iter = self.body.iter();
+    while let Some(segment) = iter.next() {
+      positions.push(segment.position());
+    }
+    positions
+  }
+
   pub fn turn_up(&mut self) {
     match self.direction {
       Direction::Down => {},
@@ -163,7 +174,10 @@ impl Snake {
   }
 
   pub fn grow(&mut self) {
-    self.is_growing = true;
+    let maximum_length: usize = ((Config::WIN_W / Config::SEG_W) * (Config::WIN_H / Config::SEG_H) - 1) as usize;
+    if self.body.len() < maximum_length {
+      self.is_growing = true;
+    }
   }
 
   fn stop_growing(&mut self) {
