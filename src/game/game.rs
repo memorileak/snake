@@ -15,6 +15,7 @@ use super::{
   KeyCode,
   EvaluateResult,
   Materials,
+  DeadMessage,
 };
 
 pub struct Game {
@@ -22,6 +23,7 @@ pub struct Game {
   snake: Snake,
   prey: Prey,
   score: Score,
+  dead_message: DeadMessage,
   directions: VecDeque<Direction>,
 }
 
@@ -30,6 +32,9 @@ impl Renderable for Game {
     self.score.render(gl, args, materials);
     self.prey.render(gl, args, materials);
     self.snake.render(gl, args, materials);
+    if self.is_gameover() {
+      self.dead_message.render(gl, args, materials);
+    }
   }
 }
 
@@ -39,8 +44,9 @@ impl Game {
     let snake = Snake::new();
     let prey = Prey::new_avoid(snake.get_positions().as_slice());
     let score = Score::new();
+    let dead_message = DeadMessage::new();
     let directions = VecDeque::new();
-    Game {is_over, snake, prey, score, directions}
+    Game {is_over, snake, prey, score, dead_message, directions}
   }
 
   pub fn tick(&mut self) {

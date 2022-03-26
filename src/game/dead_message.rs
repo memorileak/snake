@@ -18,42 +18,36 @@ use super::{
   Materials,
 };
 
-pub struct Score {
-  score: u32,
+pub struct DeadMessage {
+  message: String,
 }
 
-impl Renderable for Score {
+impl Renderable for DeadMessage {
   fn render(&mut self, gl: &mut GlGraphics, args: &RenderArgs, materials: &mut Materials) {
-    let score_str = &format!("{}", self.get_score());
-    let padding: f64 = 20.0;
-    let fontsize: FontSize = 24;
+    let message = &self.message;
+    let fontsize: FontSize = 36;
     let text = Text::new_color(Config::TEXT_COLOR, fontsize);
-    let text_width = materials.glyphs.width(fontsize, score_str).unwrap_or(0.0);
+    let text_width = materials.glyphs.width(fontsize, message).unwrap_or(0.0);
 
     gl.draw(args.viewport(), |context, gl| {
       text.draw(
-        score_str,
+        message,
         &mut materials.glyphs, 
         &context.draw_state, 
-        context.transform.trans(Config::WIN_W as f64 - text_width - padding, fontsize as f64 + padding), 
+        context.transform.trans(
+          (Config::WIN_W as f64 / 2.0) - (text_width / 2.0), 
+          (Config::WIN_H as f64 / 2.0) + 0.0,
+        ), 
         gl
       ).unwrap();
     });
   }
 }
 
-impl Score {
-  pub fn new() -> Score {
-    Score {
-      score: 0,
+impl DeadMessage {
+  pub fn new() -> DeadMessage {
+    DeadMessage {
+      message: String::from("You noob!"),
     }
-  }
-
-  pub fn increase(&mut self) {
-    self.score += 1;
-  }
-
-  pub fn get_score(&self) -> u32 {
-    self.score
   }
 }

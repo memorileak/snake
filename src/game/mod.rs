@@ -15,6 +15,7 @@ mod size;
 mod random;
 mod evaluate_result;
 mod materials;
+mod dead_message;
 
 pub use config::Config;
 pub use direction::Direction;
@@ -33,3 +34,4 @@ pub use size::Size;
 pub use random::Random;
 pub use evaluate_result::EvaluateResult;
 pub use materials::Materials;
+pub use dead_message::DeadMessage;

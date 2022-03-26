@@ -48,7 +48,7 @@ fn main() {
   let mut gl = GlGraphics::new(opengl);
   let mut materials = Materials {
     texture: Texture::from_path(Path::new("assets/sprites/pink-snake.png"), &TextureSettings::new()).unwrap(),
-    glyphs: GlyphCache::new("assets/fonts/honeybeeregular.ttf", (), TextureSettings::new()).unwrap(),
+    glyphs: GlyphCache::new("assets/fonts/cute-aurora.ttf", (), TextureSettings::new()).unwrap(),
   };
   let mut game = Game::new();
 
