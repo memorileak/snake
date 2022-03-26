@@ -12,6 +12,7 @@ use opengl_graphics::{
   GlGraphics,
   OpenGL,
   Texture,
+  GlyphCache,
   TextureSettings,
 };
 use piston::event_loop::{
@@ -31,6 +32,7 @@ use game::{
   Config,
   Game,
   KeyCode,
+  Materials,
 };
 
 fn main() {
@@ -44,10 +46,10 @@ fn main() {
     .unwrap();
 
   let mut gl = GlGraphics::new(opengl);
-  let texture = Texture::from_path(
-    Path::new("sprites/pink-snake.png"), 
-    &TextureSettings::new()
-  ).unwrap();
+  let mut materials = Materials {
+    texture: Texture::from_path(Path::new("assets/sprites/pink-snake.png"), &TextureSettings::new()).unwrap(),
+    glyphs: GlyphCache::new("assets/fonts/honeybeeregular.ttf", (), TextureSettings::new()).unwrap(),
+  };
   let mut game = Game::new();
 
   let mut events = Events::new(EventSettings::new());
@@ -64,7 +66,7 @@ fn main() {
     }
     if let Some(args) = e.render_args() {
       clear(Config::BG_COLOR, &mut gl);
-      game.render(&mut gl, &args, &texture);
+      game.render(&mut gl, &args, &mut materials);
     }
   }
 }

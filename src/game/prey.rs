@@ -5,11 +5,9 @@ extern crate graphics;
 use piston::input::RenderArgs;
 use opengl_graphics::{
   GlGraphics,
-  Texture,
 };
 use graphics::{
   Transformed,
-  DrawState,
   Image,
 };
 use super::{
@@ -18,6 +16,7 @@ use super::{
   Config,
   Random,
   Position,
+  Materials,
 };
 
 pub struct Prey {
@@ -28,12 +27,12 @@ pub struct Prey {
 }
 
 impl Renderable for Prey {
-  fn render(&mut self, gl: &mut GlGraphics, args: &RenderArgs, texture: &Texture) {
+  fn render(&mut self, gl: &mut GlGraphics, args: &RenderArgs, materials: &mut Materials) {
     let image = Image::new()
       .rect([0.0, 0.0, self.width as f64, self.height as f64])
       .src_rect(self.get_sprite().slot());
     gl.draw(args.viewport(), |context, gl| {
-      image.draw(texture, &DrawState::default(), context.transform.trans(self.x as f64, self.y as f64), gl);
+      image.draw(&materials.texture, &context.draw_state, context.transform.trans(self.x as f64, self.y as f64), gl);
     });
   }
 }

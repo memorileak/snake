@@ -14,6 +14,7 @@ mod position;
 mod size;
 mod random;
 mod evaluate_result;
+mod materials;
 
 pub use config::Config;
 pub use direction::Direction;
@@ -31,3 +32,4 @@ pub use position::Position;
 pub use size::Size;
 pub use random::Random;
 pub use evaluate_result::EvaluateResult;
+pub use materials::Materials;

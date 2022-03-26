@@ -7,4 +7,5 @@ impl Config {
   pub const SEG_W: u32 = 20;
   pub const SEG_H: u32 = 20;
   pub const BG_COLOR: [f32; 4] = [1.0, 1.0, 1.0, 1.0];
+  pub const SCORE_COLOR: [f32; 4] = [0.0, 0.0, 0.0, 1.0];
 }

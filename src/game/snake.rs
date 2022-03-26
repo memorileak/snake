@@ -8,13 +8,11 @@ use std::collections::{
   VecDeque,
 };
 use graphics::{
-  DrawState,
   Transformed,
   Image,
 };
 use opengl_graphics::{
   GlGraphics,
-  Texture,
 };
 use piston::input::RenderArgs;
 use super::{
@@ -23,6 +21,7 @@ use super::{
   Position,
   Segment,
   Config,
+  Materials,
 };
 
 pub struct Snake {
@@ -32,7 +31,7 @@ pub struct Snake {
 }
 
 impl Renderable for Snake {
-  fn render(&mut self, gl: &mut GlGraphics, args: &RenderArgs, texture: &Texture) {
+  fn render(&mut self, gl: &mut GlGraphics, args: &RenderArgs, materials: &mut Materials) {
     let mut render_params: VecDeque<(Image, Position)> = VecDeque::new();
     let mut iter = self.body.iter();
     while let Some(segment) = iter.next() {
@@ -49,8 +48,8 @@ impl Renderable for Snake {
       let mut iter = render_params.iter();
       while let Some((image, position)) = iter.next() {
         image.draw(
-          texture, 
-          &DrawState::default(), 
+          &materials.texture, 
+          &context.draw_state, 
           context.transform.trans(position.x as f64, position.y as f64),
           gl
         );
@@ -174,7 +173,9 @@ impl Snake {
   }
 
   pub fn grow(&mut self) {
-    let maximum_length: usize = ((Config::WIN_W / Config::SEG_W) * (Config::WIN_H / Config::SEG_H) - 1) as usize;
+    let maximum_length: usize = (
+      (Config::WIN_W / Config::SEG_W) * (Config::WIN_H / Config::SEG_H) - 1
+    ) as usize;
     if self.body.len() < maximum_length {
       self.is_growing = true;
     }

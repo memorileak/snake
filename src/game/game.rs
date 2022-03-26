@@ -5,7 +5,6 @@ use std::collections::VecDeque;
 use piston::input::RenderArgs;
 use opengl_graphics::{
   GlGraphics,
-  Texture,
 };
 use super::{
   Renderable,
@@ -15,9 +14,11 @@ use super::{
   Direction,
   KeyCode,
   EvaluateResult,
+  Materials,
 };
 
 pub struct Game {
+  is_over: bool,
   snake: Snake,
   prey: Prey,
   score: Score,
@@ -25,38 +26,45 @@ pub struct Game {
 }
 
 impl Renderable for Game {
-  fn render(&mut self, gl: &mut GlGraphics, args: &RenderArgs, texture: &Texture) {
-    self.prey.render(gl, args, texture);
-    self.snake.render(gl, args, texture);
+  fn render(&mut self, gl: &mut GlGraphics, args: &RenderArgs, materials: &mut Materials) {
+    self.score.render(gl, args, materials);
+    self.prey.render(gl, args, materials);
+    self.snake.render(gl, args, materials);
   }
 }
 
 impl Game {
   pub fn new() -> Game {
+    let is_over = false;
     let snake = Snake::new();
     let prey = Prey::new_avoid(snake.get_positions().as_slice());
     let score = Score::new();
     let directions = VecDeque::new();
-    Game {snake, prey, score, directions}
+    Game {is_over, snake, prey, score, directions}
   }
 
   pub fn tick(&mut self) {
-    if let Some(direction) = self.directions.pop_front() {
-      match direction {
-        Direction::Up => {self.snake.turn_up()},
-        Direction::Down => {self.snake.turn_down()},
-        Direction::Left => {self.snake.turn_left()},
-        Direction::Right => {self.snake.turn_right()},
+    if !self.is_gameover() {
+      if let Some(direction) = self.directions.pop_front() {
+        match direction {
+          Direction::Up => {self.snake.turn_up()},
+          Direction::Down => {self.snake.turn_down()},
+          Direction::Left => {self.snake.turn_left()},
+          Direction::Right => {self.snake.turn_right()},
+        }
       }
-    }
-    self.snake.shift();
-    match self.evaluate() {
-      EvaluateResult::SnakeDied => {},
-      EvaluateResult::SnakeAte => {
-        self.snake.grow();
-        self.prey.move_randomly_avoid(self.snake.get_positions().as_slice());
-      },
-      EvaluateResult::Normal => {},
+      self.snake.shift();
+      match self.evaluate() {
+        EvaluateResult::SnakeDied => {
+          self.gameover();
+        },
+        EvaluateResult::SnakeAte => {
+          self.score.increase();
+          self.snake.grow();
+          self.prey.move_randomly_avoid(self.snake.get_positions().as_slice());
+        },
+        EvaluateResult::Normal => {},
+      }
     }
   }
 
@@ -71,6 +79,15 @@ impl Game {
   }
 
   fn is_snake_dead(&self) -> bool {
+    let head_position = self.snake.get_head_position();
+    let body = self.snake.get_positions();
+    let mut body_iter = body.iter();
+    body_iter.next();
+    while let Some(position) = body_iter.next() {
+      if head_position == *position {
+        return true;
+      }
+    }
     false
   }
 
@@ -86,5 +103,13 @@ impl Game {
       KeyCode::D => {self.directions.push_back(Direction::Right)},
       KeyCode::Unknown => {},
     }
+  }
+
+  fn is_gameover(&self) -> bool {
+    self.is_over
+  }
+
+  fn gameover(&mut self) {
+    self.is_over = true;
   }
 }
