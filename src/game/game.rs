@@ -62,6 +62,7 @@ impl Game {
       self.snake.shift();
       match self.evaluate() {
         EvaluateResult::SnakeDied => {
+          self.dead_message.aware_score(self.score.get_score());
           self.gameover();
         },
         EvaluateResult::SnakeAte => {
@@ -102,12 +103,14 @@ impl Game {
   }
 
   pub fn receive_keystroke(&mut self, keycode: KeyCode) {
-    match keycode {
-      KeyCode::W => {self.directions.push_back(Direction::Up)},
-      KeyCode::S => {self.directions.push_back(Direction::Down)},
-      KeyCode::A => {self.directions.push_back(Direction::Left)},
-      KeyCode::D => {self.directions.push_back(Direction::Right)},
-      KeyCode::Unknown => {},
+    if !self.is_gameover() {
+      match keycode {
+        KeyCode::W => {self.directions.push_back(Direction::Up)},
+        KeyCode::S => {self.directions.push_back(Direction::Down)},
+        KeyCode::A => {self.directions.push_back(Direction::Left)},
+        KeyCode::D => {self.directions.push_back(Direction::Right)},
+        KeyCode::Unknown => {},
+      }
     }
   }
 

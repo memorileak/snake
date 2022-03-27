@@ -50,4 +50,16 @@ impl DeadMessage {
       message: String::from("You noob!"),
     }
   }
+
+  pub fn aware_score(&mut self, score: u32) {
+    self.message = if score < 20 {
+      String::from("You noob!")
+    } else if score < 50 {
+      String::from("Nice try!")
+    } else if score < 100 {
+      String::from("Very good!")
+    } else {
+      String::from("What a Pro!")
+    }
+  }
 }
