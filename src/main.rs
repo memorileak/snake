@@ -1,3 +1,5 @@
+#![windows_subsystem = "windows"]
+
 extern crate glutin_window;
 extern crate graphics;
 extern crate opengl_graphics;

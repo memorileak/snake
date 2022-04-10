@@ -145,30 +145,26 @@ impl Snake {
   }
 
   pub fn turn_up(&mut self) {
-    match self.direction {
-      Direction::Down => {},
-      _ => {self.direction = Direction::Up},
+    if let Direction::Down = self.direction {} else {
+      self.direction = Direction::Up;
     }
   }
 
   pub fn turn_down(&mut self) {
-    match self.direction {
-      Direction::Up => {},
-      _ => {self.direction = Direction::Down},
+    if let Direction::Up = self.direction {} else {
+      self.direction = Direction::Down;
     }
   }
 
   pub fn turn_left(&mut self) {
-    match self.direction {
-      Direction::Right => {},
-      _ => {self.direction = Direction::Left},
+    if let Direction::Right = self.direction {} else {
+      self.direction = Direction::Left;
     }
   }
 
   pub fn turn_right(&mut self) {
-    match self.direction {
-      Direction::Left => {},
-      _ => {self.direction = Direction::Right},
+    if let Direction::Left = self.direction {} else {
+      self.direction = Direction::Right;
     }
   }
 
